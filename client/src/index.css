@@ -20,7 +20,7 @@
   .card-text {
     color: #d24030;
   }
-  .Home {
+  .Home, .Login, .Adding {
     background-color: #2d3339;
     min-height: 100vh;
 
@@ -30,7 +30,7 @@
   } */
   .title, .title:hover {
     text-decoration: none;
-    color: #d24030;
+    color:#e1c598;
     font-size: 30px;
     padding-left: 10px;
   }
@@ -71,9 +71,10 @@
     padding: 16px;
   }
   .body{
+    justify-content:center;
     padding-bottom: 20px;
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap:wrap;
     margin:auto;
   }
   .star{
@@ -86,4 +87,100 @@
   .blackstar {
     color: #5a5d60ea;
     height: 18px;
+  }
+  .loginform {
+    margin: auto;
+    margin-top: 100px;
+  }
+  .username,.username:focus,.password,.password:focus,.moviename,.moviename:hover {
+    outline: none;
+    color:#e1c598;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border: none;
+    padding-left: 5px;
+    border-radius: 5px;
+    background-color: #393e42;
+    border-bottom: solid 1.5px #d24030;
+    margin: 5px;
+    cursor: text;
+    width: 300px;
+    height: 45px;
+  }
+  .username,.username:focus,.moviename,.moviename:hover{
+    margin-bottom: 30px;
+  }
+  .password,.password:focus {
+    margin-bottom: 20px;
+  }
+  .label {
+    font-size: 20px;
+    color:#bbc4cd;
+    text-align: left;
+    display: block;
+  }
+  .loginbutton {
+    display:block;
+    
+    border: solid #252526;
+    background-color:#393e42 ;
+    color:#d24030;
+    padding: 8px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .loginbutton:hover{
+   
+    background-color: #252526;
+  }
+  .err {
+    display: block;
+    border: none;
+    background-color: #393e42;
+    color: rgb(208, 29, 29);
+    cursor:none;
+    margin-bottom: 10px;
+    text-align: center;
+    border-radius: 5px;
+  }
+  .loginlink,.loginlink:hover {
+    text-decoration: none;
+    margin-right: 15px;
+    color:wheat ;
+  }
+  .add{
+    margin-top: 100px;
+    margin: auto;
+  }
+  .heading {
+    margin-top: 50px;
+    color:#e1c598;
+    font-size: 28px;
+    margin-bottom: 40px;
+  }
+  .slider{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 300px;
+    background-color: #252526;
+    cursor:grabbing;
+    -webkit-appearance: none;
+    width: 100%;
+    height: 10px;
+    border-radius: 5px;  
+    background:#e1c598;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+  }
+  .slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%; 
+    border: solid black 1px;
+    background:#bbc4cd;
+    cursor: grab;
   }

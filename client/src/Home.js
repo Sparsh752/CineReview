@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMagnifyingGlass, faStar } from '@fortawesome/free-solid-svg-icons'
 import { useEffect, useState } from 'react'
 import axios from  'axios';
-
+import { Link } from 'react-router-dom';
 const Home = () => {
     const [lists,setLists]=useState([]);
     useEffect(()=>{
@@ -13,16 +13,17 @@ const Home = () => {
         console.log(err);
       })
     },[])
-    const counter=0;
     const [keyword,setKeyword]=useState('')
     const stars=[0,0,0,0,0]
     return (
         <div className="Home">
       <nav className="navbar nav">
         <div className="container-fluid">
-          <a className="title">CineReview</a>
+        <Link to="/" className="title">CineReview</Link>
+        
           <form className="d-flex" role="search">
             <div className="box">
+            <Link to="/login" className='loginlink'>Admin Login</Link>
               <FontAwesomeIcon className="icon" icon={faMagnifyingGlass}/>
               <input className="search" type="text" value={keyword} onChange={(e)=>setKeyword(e.target.value)} placeholder="Search..." aria-label="Search"></input>
             </div>

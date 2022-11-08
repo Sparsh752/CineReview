@@ -32,4 +32,7 @@ app.get("/api",(req,res)=>{
     //       "genre":"action",
     //     }
     //   ])
+  app.post("/api",(req,res)=>{
+    console.log(req.body);
+  })
 })
