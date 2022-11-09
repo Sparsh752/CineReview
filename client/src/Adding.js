@@ -2,33 +2,55 @@
 
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link,useLocation,useHistory } from "react-router-dom";
+import { Link,useHistory } from "react-router-dom";
 
 
 const Adding = () => {
+    const [error,setError]=useState("");
+    const [counter,setCounter]=useState(0);
     const history=useHistory();
-    const location=useLocation();
+    
     const [info,setInfo]=useState({name:"",genre:"",rating:0})
+    const [lists,setLists]=useState([]);
     useEffect(()=>{
-        if(location.state===1){
-            // console.log("yes");
-        }else{
-            history.push('/');
+      axios.get('/api').then(res=>{
+        setLists(res.data)
+        console.log(res.data)
+      }).catch(err=>{
+        console.log(err);
+      })
+      
+    },[])
+    useEffect(()=>{
+        const url='/add/'+info.name+'/'+info.genre+'/'+info.rating;
+        if(counter===1){
+            axios.get(url).then(res=> history.push({pathname:'/admin',state:1})).catch(err =>{
+                console.log(err)
+            })
         }
-    })
+        
+    },[counter])
     const handleSubmit= e =>{
         e.preventDefault()
-        axios.post("api",{
-            name:info.name,
-            genre:info.genre,
-            rating:info.rating
-        }).then(res=>console.log(res)).catch(err=>console.log(err))
+        var check=1;
+        lists.map(row=>{
+            if(row.name.toUpperCase()===info.name.toUpperCase()){
+                check=0;
+            }
+        })
+        if(check===1){
+            setCounter(1);
+        }else{
+            setError("Movie already exists");
+        }
+        
+        
     }
     return (
         <div className="Adding">
             <nav className="navbar nav">
         <div className="container-fluid">
-          <Link to="/" className="title">CineReview</Link>
+          <Link to={{pathname:'/admin',state:1}} className="title">CineReview</Link>
         </div>
       </nav>
         <div className="body" onSubmit={handleSubmit}>
@@ -46,6 +68,9 @@ const Adding = () => {
                 <input type="range" min={0} max={50} value={info.rating*10} className="slider" required onChange={e=>{
                     setInfo({...info,rating:e.target.value/10})
                 }}/>
+                <div className="err">
+                        {error}
+                    </div>
                 <button className="loginbutton">Add Movie</button>
             </form>
         </div>

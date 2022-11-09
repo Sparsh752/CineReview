@@ -1,9 +1,13 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faMagnifyingGlass, faStar } from '@fortawesome/free-solid-svg-icons'
+import { faMagnifyingGlass,faStar, faTrashCan } from '@fortawesome/free-solid-svg-icons'
 import { useEffect, useState } from 'react'
 import axios from  'axios';
-import { Link } from 'react-router-dom';
-const Home = () => {
+import { Link,useLocation,useHistory } from 'react-router-dom';
+
+const Admin = () => {
+    const [counter,setcounter]=useState(0);
+    const history=useHistory()
+    const location=useLocation();
     const [lists,setLists]=useState([]);
     useEffect(()=>{
       axios.get('/api').then(res=>{
@@ -13,23 +17,47 @@ const Home = () => {
         console.log(err);
       })
       
-    },[])
+    },[counter])
+    const [id,setId]=useState(0);
+
+    useEffect(()=>{
+        if(location.state===1){
+            // console.log("yes");
+        }else{
+            history.push('/');
+        }
+    })
+    useEffect(()=>{
+        if(counter===1){
+            const url='/delete/'+id;
+            axios.get(url).then(res=>{
+                setcounter(0);
+            }).catch(err => console.log(err))
+            
+        }
+        
+       
+    },[id])
     const [keyword,setKeyword]=useState('')
     const stars=[0,0,0,0,0]
     return (
-        <div className="Home">
+                <div className="Admin">
       <nav className="navbar nav">
         <div className="container-fluid">
-        <Link to="/" className="title">CineReview</Link>
+        <Link to={{pathname:'/admin',state:1}} className="title">CineReview</Link>
+        
         
           <form className="d-flex" role="search">
+          <div>
+            <Link to="/add" className='add-button'>Add New Movie</Link>
+            <Link to="/" className='add-button'>Log Out</Link>
+        </div>
             <div className="box">
-            <Link to="/login" className='loginlink'>Admin Login</Link>
+            
               <FontAwesomeIcon className="icon" icon={faMagnifyingGlass}/>
               <input className="search" type="text" value={keyword} onChange={(e)=>setKeyword(e.target.value)} placeholder="Search..." aria-label="Search"></input>
             </div>
           
-            {/* <button class="btn btn-outline-danger" type="submit">Search</button> */}
           </form>
         </div>
       </nav>
@@ -38,7 +66,7 @@ const Home = () => {
       { lists.map(row => { 
         if(row.name.toUpperCase().search(keyword.toUpperCase()) !== -1){
 
-       return <div className="card-deco shadow-lg">
+       return <div className="admin-card-deco shadow-lg">
         <img src="/poster.jpeg" width={270} height={300} className="card-img-top cover" alt="cover"/>
         <div className="card-b">
           <h5 className="movietitle">{row.name}</h5>
@@ -53,6 +81,14 @@ const Home = () => {
                 
             })}
           </div>
+            <div className='outertrash'>
+                <button className='trash-link' onClick={()=>{
+                    setcounter(1);
+                    setId(row._id)
+                }} > <FontAwesomeIcon className='trash' icon={faTrashCan} /> </button>
+                
+            </div>
+            
         </div>
         </div>
       }else{
@@ -66,4 +102,4 @@ const Home = () => {
     );
 }
  
-export default Home;
+export default Admin;
